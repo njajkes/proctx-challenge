@@ -1,0 +1,1 @@
+export { ColorsWidget } from "./ui";

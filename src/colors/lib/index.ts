@@ -1,0 +1,1 @@
+export { useColorsStore } from "./store";
