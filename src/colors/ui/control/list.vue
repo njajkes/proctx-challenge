@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed, onUpdated } from 'vue';
 import { Colors } from '../../entities';
 import { useColorsStore } from '../../lib';
 import Item from './item.vue'
@@ -10,13 +11,17 @@ interface ListProps {
 
 const { list, index } = defineProps<ListProps>()
 const { toggleList } = useColorsStore()
+const indeterminate = computed(() => list.checked && !list.items.every(el => el.checked))
+onUpdated(() => {
+  console.log(list.checked, indeterminate.value)
 
+})
 </script>
 
 <template>
   <div class="flex flex-col border-solid border-t-[1px] border-b-[1px] border-neutral-900 first:border-t-0 last:border-b-0 py-3">
     <label class="flex flex-row gap-3">
-      <input type="checkbox" @change="() => toggleList(list.id)" />
+      <input type="checkbox" @change="() => toggleList(list.id)" :checked="list.checked" :indeterminate="indeterminate" />
       <p class="text-left text-xl font-bold">List {{ index + 1 }}</p>
     </label>
     <div class="w-full pl-10">
